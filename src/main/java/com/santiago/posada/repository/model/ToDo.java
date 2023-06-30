@@ -1,38 +1,38 @@
 package com.santiago.posada.repository.model;
 
-public class ToDo {
-    public static int counter = 0;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-    public int id;
+@Document
+public class ToDo {
+
+    @Id
+    public String id;
     public String task;
 
+    public ToDo(){
+
+    }
+
     public ToDo(String task){
-        counter++;
-        this.id = counter;
         this.task = task;
     }
 
-    private ToDo(String task, int id){
+    public ToDo(String id, String task){
         this.id = id;
         this.task = task;
     }
-    public static ToDo from(String task, int id){
-        return new ToDo(task, id);
+
+    public static ToDo from(String task, String id){
+        return new ToDo(id, task);
     }
 
-    public static int getCounter() {
-        return counter;
-    }
 
-    public static void setCounter(int counter) {
-        ToDo.counter = counter;
-    }
-
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
