@@ -1,6 +1,7 @@
 package com.santiago.posada.routes;
 
 import com.santiago.posada.repository.ToDoRepository;
+import com.santiago.posada.repository.model.Author;
 import com.santiago.posada.repository.model.ToDo;
 import com.santiago.posada.service.ToDoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,30 @@ public class TaskRoutes {
                 request -> ServerResponse
                         .ok()
                         .body(BodyInserters.fromPublisher(service.getTasks(), ToDo.class)));
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> addTask(){
+        return route(POST("route/save/task"),
+                request -> request.bodyToMono(ToDo.class)
+                        .flatMap(todo -> service.addTask(todo))
+                        .flatMap(result -> ServerResponse.ok().bodyValue(result)));
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> createUser(){
+        return route(POST("route/create/user"),
+                request -> request.bodyToMono(Author.class)
+                        .flatMap(author -> service.createUser(author))
+                        .flatMap(result -> ServerResponse.ok().bodyValue(result)));
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> getUserWithTasks(){
+        return route(GET("route/get/user/{userId}"),
+                request -> service.findAuthorWithAllHisTasks(Integer
+                        .parseInt(request.pathVariable("userId")))
+                        .flatMap(author -> ServerResponse.ok().bodyValue(author)));
     }
 
     //Generar un tres router functions
