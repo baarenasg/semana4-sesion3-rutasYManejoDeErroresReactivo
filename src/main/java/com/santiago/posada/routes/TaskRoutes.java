@@ -53,10 +53,8 @@ public class TaskRoutes {
                         .flatMap(author -> ServerResponse.ok().bodyValue(author)));
     }
 
-    //Generar un tres router functions
-    //Post para guardar una tarea
-    //Put para actualizar
-    //Delete para eliminar una tarea.
+    //Generar métodos repository, el servicio y la ruta para poder solicitar todos
+    //los autores con todas sus tareas
 
 
 }
