@@ -27,6 +27,10 @@ public class ToDo {
         return new ToDo(id, task);
     }
 
+    public static ToDo fromDelete(String id){
+        return new ToDo(id,"");
+    }
+
 
     public String getId() {
         return id;

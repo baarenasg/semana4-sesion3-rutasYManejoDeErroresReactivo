@@ -28,6 +28,31 @@ public class TaskRoutes {
                         .body(BodyInserters.fromPublisher(service.getTasks(), ToDo.class)));
     }
 
+    @Bean
+    public RouterFunction<ServerResponse> createTasks(){
+        return route(POST("route/create/task/{task}"),
+                request -> ServerResponse
+                        .ok()
+                        .body(BodyInserters.fromPublisher(service.addTask(request.pathVariable("task")), ToDo.class)));
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> updateTasks(){
+        return route(PUT("route/update/task/{id}/{newTask}"),
+                request -> ServerResponse
+                        .ok()
+                        .body(BodyInserters.fromPublisher(service.updateTask(request.pathVariable("id"),request.pathVariable("newTask")), ToDo.class)));
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> deleteTasks(){
+        return route(DELETE("route/delete/task/{id}"),
+                request -> ServerResponse
+                        .ok()
+                        .body(BodyInserters.fromPublisher(service.deleteTask(request.pathVariable("id")),ToDo.class)));
+    }
+
+
     //Generar un tres router functions
     //Post para guardar una tarea
     //Put para actualizar
